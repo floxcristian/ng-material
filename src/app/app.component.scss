@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  
+  .skip-link {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-clip-path: polygon(0 0, 0 0, 0 0);
+    clip-path: polygon(0 0, 0 0, 0 0);
+  }
+  
