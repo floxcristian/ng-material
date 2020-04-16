@@ -1,0 +1,681 @@
+/* Typography */
+/* Breakpoints */
+/* Space */
+/* Color */
+/* Elevation */
+/* Motion */
+/* Other Variables */
+/* Typography */
+/* Breakpoints */
+/* Space */
+/* Color */
+/* Elevation */
+/* Motion */
+/* Other Variables */
+/* Typography */
+/* Breakpoints */
+/* Space */
+/* Color */
+/* Elevation */
+/* Motion */
+/* Other Variables */
+
+/* BASICS */
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 300px;
+  color: black;
+  direction: ltr;
+}
+/* PADDING */
+.CodeMirror-lines {
+  padding: 4px 0; /* Vertical padding around content */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 4px; /* Horizontal padding of content */
+}
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+/* GUTTER */
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+  white-space: nowrap;
+}
+.CodeMirror-linenumbers {}
+.CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+.CodeMirror-guttermarker { color: black; }
+.CodeMirror-guttermarker-subtle { color: #999; }
+/* CURSOR */
+.CodeMirror-cursor {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  width: auto;
+  border: 0 !important;
+  background: #7e7;
+}
+.cm-fat-cursor div.CodeMirror-cursors {
+  z-index: 1;
+}
+.cm-fat-cursor-mark {
+  background-color: rgba(20, 255, 20, 0.5);
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+}
+.cm-animate-fat-cursor {
+  width: auto;
+  border: 0;
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+  background-color: #7e7;
+}
+@-webkit-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+/* Can style cursor different in overwrite (non-insert) mode */
+.CodeMirror-overwrite .CodeMirror-cursor {}
+.cm-tab { display: inline-block; text-decoration: inherit; }
+.CodeMirror-rulers {
+  position: absolute;
+  left: 0; right: 0; top: -50px; bottom: 0;
+  overflow: hidden;
+}
+.CodeMirror-ruler {
+  border-left: 1px solid #ccc;
+  top: 0; bottom: 0;
+  position: absolute;
+}
+/* DEFAULT THEME */
+.cm-s-default .cm-header {color: blue;}
+.cm-s-default .cm-quote {color: #090;}
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-header, .cm-strong {font-weight: bold;}
+.cm-em {font-style: italic;}
+.cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
+.cm-s-default .cm-keyword {color: #708;}
+.cm-s-default .cm-atom {color: #219;}
+.cm-s-default .cm-number {color: #164;}
+.cm-s-default .cm-def {color: #00f;}
+.cm-s-default .cm-variable,
+.cm-s-default .cm-punctuation,
+.cm-s-default .cm-property,
+.cm-s-default .cm-operator {}
+.cm-s-default .cm-variable-2 {color: #05a;}
+.cm-s-default .cm-variable-3, .cm-s-default .cm-type {color: #085;}
+.cm-s-default .cm-comment {color: #a50;}
+.cm-s-default .cm-string {color: #a11;}
+.cm-s-default .cm-string-2 {color: #f50;}
+.cm-s-default .cm-meta {color: #555;}
+.cm-s-default .cm-qualifier {color: #555;}
+.cm-s-default .cm-builtin {color: #30a;}
+.cm-s-default .cm-bracket {color: #997;}
+.cm-s-default .cm-tag {color: #170;}
+.cm-s-default .cm-attribute {color: #00c;}
+.cm-s-default .cm-hr {color: #999;}
+.cm-s-default .cm-link {color: #00c;}
+.cm-s-default .cm-error {color: #f00;}
+.cm-invalidchar {color: #f00;}
+.CodeMirror-composing { border-bottom: 2px solid; }
+/* Default styles for common addons */
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
+.CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
+.CodeMirror-activeline-background {background: #e8f2ff;}
+/* STOP */
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn\'t touch them. */
+.CodeMirror {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+.CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 30px is the magic margin used to hide the element\'s real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -30px; margin-right: -30px;
+  padding-bottom: 30px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 30px solid transparent;
+}
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+.CodeMirror-vscrollbar {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0; bottom: 0;
+}
+.CodeMirror-gutter-filler {
+  left: 0; bottom: 0;
+}
+.CodeMirror-gutters {
+  position: absolute; left: 0; top: 0;
+  min-height: 100%;
+  z-index: 3;
+}
+.CodeMirror-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: -30px;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.CodeMirror-gutter-background {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+.CodeMirror-gutter-wrapper ::selection { background-color: transparent }
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  /* Reset some styles that the rest of the page might have set */ border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  font-variant-ligatures: contextual;
+}
+.CodeMirror-wrap pre.CodeMirror-line,
+.CodeMirror-wrap pre.CodeMirror-line-like {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  padding: 0.1px; /* Force widget margins to stay inside of the container */
+}
+.CodeMirror-widget {}
+.CodeMirror-rtl pre { direction: rtl; }
+.CodeMirror-code {
+  outline: none;
+}
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
+  box-sizing: content-box;
+}
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+.CodeMirror-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+.CodeMirror-measure pre { position: static; }
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+.cm-searching {
+  background-color: #ffa;
+  background-color: rgba(255, 255, 0, .4);
+}
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
+/* neo theme for codemirror */
+/* Color scheme */
+.cm-s-neo.CodeMirror {
+  background-color:#ffffff;
+  color:#2e383c;
+  line-height:1.4375;
+}
+.cm-s-neo .cm-comment { color:#75787b; }
+.cm-s-neo .cm-keyword, .cm-s-neo .cm-property { color:#1d75b3; }
+.cm-s-neo .cm-atom,.cm-s-neo .cm-number { color:#75438a; }
+.cm-s-neo .cm-node,.cm-s-neo .cm-tag { color:#9c3328; }
+.cm-s-neo .cm-string { color:#b35e14; }
+.cm-s-neo .cm-variable,.cm-s-neo .cm-qualifier { color:#047d65; }
+/* Editor styling */
+.cm-s-neo pre {
+  padding:0;
+}
+.cm-s-neo .CodeMirror-gutters {
+  border:none;
+  border-right:10px solid transparent;
+  background-color:transparent;
+}
+.cm-s-neo .CodeMirror-linenumber {
+  padding:0;
+  color:#e0e2e5;
+}
+.cm-s-neo .CodeMirror-guttermarker { color: #1d75b3; }
+.cm-s-neo .CodeMirror-guttermarker-subtle { color: #e0e2e5; }
+.cm-s-neo .CodeMirror-cursor {
+  width: auto;
+  border: 0;
+  background: rgba(155,157,162,0.37);
+  z-index: 1;
+}
+.preload .form, .preload .nav-indicator, .preload header {
+  transition: none !important;
+}
+.search-button .material-icons, .search-button .icons-container, .search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form, .search-button .material-icons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+/* Typography */
+/* Breakpoints */
+/* Space */
+/* Color */
+/* Elevation */
+/* Motion */
+/* Other Variables */
+:host {
+  display: block;
+}
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transform: translateY(-100%);
+  transition: mdc-exit-temporary(transform, "300ms"), opacity 0s "300ms";
+  opacity: 0;
+  background-color: #212121;
+  /* @alternate */
+  background-color: var(--mdc-theme-primary, #212121);
+  display: flex;
+  justify-content: space-between;
+  height: 112px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  /* stylelint-disable-next-line selector-no-qualifying-type */
+  /* stylelint-disable-next-line selector-no-qualifying-type */
+}
+.header-show header {
+  transform: translateY(0);
+  transition: transform "300ms" 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 0s "300ms";
+  opacity: 1;
+}
+@media screen and (min-width: 921px) {
+  header {
+    height: 72px;
+  }
+}
+header.search-show {
+  transform: translateY(0);
+  opacity: 1;
+}
+header.show {
+  transform: translateY(0);
+  transition: transform "300ms" 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 0ms 300ms;
+  opacity: 1;
+}
+.nav {
+  margin-left: auto;
+}
+@media screen and (max-width: 920px) {
+  .nav {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    left: 0;
+  }
+}
+.nav-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media screen and (max-width: 920px) {
+  .nav-list {
+    display: table;
+    width: 100%;
+  }
+}
+.nav-item {
+  display: table-cell;
+  transform: translateZ(0);
+  /* webkit flicker fix */
+  text-align: center;
+}
+@media screen and (min-width: 921px) {
+  .nav-item {
+    display: inline-block;
+  }
+}
+@media screen and (max-width: 920px) {
+  .nav-item {
+    width: 25%;
+  }
+}
+.nav-item--active .nav-indicator {
+  transform: scaleY(1);
+}
+.nav-indicator {
+  background: #fff;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform "235ms" 0ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media screen and (min-width: 921px) {
+  .nav-indicator {
+    right: 16px;
+    left: 16px;
+  }
+}
+.search-button {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 0;
+  background: 0 0;
+  font-family: inherit;
+  line-height: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+.search-button .icons-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+.search-button .material-icons {
+  transition: transform "200ms" 0ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media screen and (min-width: 921px) {
+  .search-button {
+    margin-left: 24px;
+  }
+}
+.spyglass {
+  color: #fff;
+}
+.search-close {
+  transform: rotate(-90deg) scale(0.5);
+  transform-origin: center;
+  visibility: hidden;
+}
+.form {
+  background: #fff;
+  display: flex;
+  transition: opacity "100ms" 100ms cubic-bezier(0.4, 0, 0.2, 1), visibility "100ms";
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 4;
+}
+.search-show .form {
+  transition: opacity "100ms" 0ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  pointer-events: all;
+  visibility: visible;
+}
+.form__back {
+  display: none;
+  width: 72px;
+  height: 72px;
+}
+.page--search .form__back {
+  display: block;
+}
+.form__input {
+  font-family: Roboto, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.375rem;
+  line-height: 3.125rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-decoration: inherit;
+  text-transform: inherit;
+  position: relative;
+  top: 16px;
+  flex: 1;
+  height: 72px;
+  margin: 0;
+  padding: 0 72px 0 40px;
+  transition: top "150ms" 0ms cubic-bezier(0.4, 0, 0.2, 1);
+  border: 0;
+  outline: 0;
+  background: 0 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+@media screen and (min-width: 521px) {
+  .form__input {
+    font-size: 1.375rem;
+  }
+}
+@media screen and (min-width: 921px) {
+  .form__input {
+    font-size: 1.5rem;
+  }
+}
+.page--search .form__input {
+  padding-left: 0;
+}
+.search-show .form__input {
+  top: 0;
+}
+.form__label {
+  color: #616161;
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+.search-show {
+  background: #fff;
+}
+.search-show header {
+  top: 0;
+}
+.search-show .spyglass {
+  transform: scale(0.5);
+  visibility: hidden;
+}
+.search-show .search-close {
+  transform: rotate(0deg) scale(1);
+  visibility: visible;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  margin-right: auto;
+  padding-left: 24px;
+  -webkit-font-smoothing: auto;
+  text-decoration: none;
+}
+.brand:visited {
+  color: inherit;
+}
+.brand:hover, .brand:focus {
+  opacity: inherit;
+}
+@media screen and (max-width: 1320px) {
+  .breadcrumbs__hamburger + .brand, .hamburger + .brand {
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+.side-nav .brand {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+@-webkit-keyframes mioLogo {
+  100% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes mioLogo {
+  100% {
+    background-position: 100% 50%;
+  }
+}
+.brand__logo {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+  background: url('https://storage.googleapis.com/spec-host/material-io/prod/1584722361160/static/angular/mio-logo-sprite.46a35221e587121d85e8.png') 100% 50%/auto 100% no-repeat;
+}
+.page--homepage .brand__logo {
+  -webkit-animation: mioLogo 1.6s steps(96) forwards;
+          animation: mioLogo 1.6s steps(96) forwards;
+  background-position: 0 50%;
+}
+@media screen and (max-width: 1320px) {
+  .brand__logo--animate {
+    -webkit-animation: mioLogo 1.6s steps(96) forwards;
+            animation: mioLogo 1.6s steps(96) forwards;
+    background-position: 0 50%;
+    -webkit-animation-delay: "200ms";
+            animation-delay: "200ms";
+  }
+}
+.brand__title {
+  color: #212121;
+  /* @alternate */
+  color: var(--mdc-theme-primary, #212121);
+  display: none;
+  font-family: "Roboto Mono", monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+header .brand__title {
+  color: #fff;
+}
+.side-nav .brand__title {
+  display: inline;
+}
+.page--homepage .brand__title {
+  -webkit-animation: slideright "235ms" 0ms cubic-bezier(0.4, 0, 0.2, 1) forwards, fadein "100ms" 0ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          animation: slideright "235ms" 0ms cubic-bezier(0.4, 0, 0.2, 1) forwards, fadein "100ms" 0ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@media screen and (min-width: 1321px) {
+  .brand__title {
+    display: inline;
+  }
+}
+@media screen and (max-width: 1320px) {
+  .brand__title--animate {
+    -webkit-animation: fadein "150ms" 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: fadein "150ms" 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+  }
+}

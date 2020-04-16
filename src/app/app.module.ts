@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { WhatsNewPageComponent } from './pages/whats-new-page/whats-new-page.component';
+import { ToolbarComponent } from './pages/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundPageComponent,
     HomePageComponent,
-    WhatsNewPageComponent
+    WhatsNewPageComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,54 @@
+<header [ngClass]="{'show': isShown, 'search-show': isSearchOpen}" #header>
+
+  <a [routerLink]="''" class="brand" [attr.aria-label]="toolbarConfig.title_link_aria_label">
+    <i class="brand__logo"></i>
+    <span class="brand__title">{{ toolbarConfig.title }}</span>
+  </a>
+  
+  <nav class="nav" role="navigation">
+    <ul class="nav-list nav-list--cleared">
+
+      <ng-container *ngFor="let link of toolbarConfig.links">
+        <li class="nav-item" [ngClass]="isLinkActive(link)">
+            <!--
+          <mio-link mioAnalyticsTracking
+                    [analyticsKey]="AnalyticsKeys.MIO_TOOLBAR"
+                    [analyticsLabel]="link.href"
+                    linkClass="nav-link"
+                    [link]="link.href"
+                    [ariaLabel]="link.aria_label"
+                    [openNewWindow]="false">
+            {{ link.label }}
+            <span class="nav-indicator"></span>
+          </mio-link>
+        -->
+        </li>
+       
+        &ngsp;
+      </ng-container>
+    </ul>
+  </nav>
+
+  <form id="form" class="form" data-comp="SearchForm">
+    <button class="form__back " type="button" [attr.aria-label]="toolbarConfig.search_button_back_aria_label">
+      <i class="material-icons notranslate">arrow_back</i>
+    </button>
+
+    <input id="search-query" class="form__input" name="q" type="text" title="query"
+           #searchinput
+           [placeholder]="toolbarConfig.search_input_placeholder"
+           autocomplete="off"
+           [attr.aria-label]="toolbarConfig.search_input_aria_label">
+  </form>
+
+  <!--
+  <button mioAnalyticsTracking
+    [analyticsKey]="AnalyticsKeys.MIO_SEARCH_ICON"
+    analyticsLabel="DEFAULT: ga label"
+    class="search-button" (click)="toggleSearch()">
+    <span class="icons-container mdc-ripple-surface" data-mdc-ripple-is-unbounded>
+      <i class="material-icons notranslate spyglass" [attr.aria-label]="toolbarConfig.search_button_open_aria_label">search</i>
+      <i class="material-icons notranslate search-close" [attr.aria-label]="toolbarConfig.search_button_close_aria_label">close</i>
+    </span>
+  </button>-->
+</header>
